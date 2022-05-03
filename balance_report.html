@@ -1,0 +1,79 @@
+{% extends 'partnersapp/base_partners.html' %}
+{% load static %}
+
+{% block head_ %}
+        <link rel="stylesheet" href="{% static "css/select/bootstrap.min.css" %}">
+        <link rel="stylesheet" href="{% static "css/select/bootstrap-select.min.css" %}">
+        <link rel="stylesheet" href="{% static "css/select/select.css" %}">
+{% endblock %}
+
+{% block title %}BALANCE REPORT{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="report-railways col-8 mx-auto text-center">
+            <div class="report-railways__header">
+                <p class="font-weight-normal">{{ title_ }}</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% if message %}
+                        <div class="alert alert-warning" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <form action="{{ request_url }}" method="get">
+                <label class="col-4">Период с: </label>
+                <input class="col-4 mx-auto" type="date" name="from_date" id="from_"> <br>
+                <label class="col-4">Период по: </label>
+                <input class="col-4 mx-auto" type="date" name="to_date" id="to"> <br>
+                <label class="col-4">Партнер</label>
+                <select name="account_id"
+                        class="selectpicker show-menu-arrow"
+                        data-style="form-control"
+                        data-live-search="true"
+                        title="Выбор партнера"
+                        multiple="multiple"
+                        data-actions-box="true"
+                        data-width="15%"
+                        id="search-select">
+                    {% for account in accounts %}
+                        <option value="{{ account.id }}">{{ account }}</option>
+                    {% endfor %}
+                </select><br>
+                <input type="submit" value="Выгрузить" class="btn btn-success text-center" name="report">
+            </form>
+            {% if link_to_download %}
+                <h2><a href="{{ link_to_download }}">СКАЧАТЬ</a></h2>
+            {% endif %}
+        </div>
+    </div>
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-select.min.js" %}"></script>
+    <script>
+        $('#search-select')
+            .dropdown({
+                allowAdditions: true,
+            });
+    </script>
+    <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var from_value = yyyy + '-' + mm + '-' + dd;
+
+        document.getElementById("from_").value = from_value;
+        document.getElementById("to").value = from_value;
+    </script>
+{% endblock %}

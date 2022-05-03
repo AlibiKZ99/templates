@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/partners_admin.css" %}">
+    {% block head_ %}
+    {% endblock %}
+    <style>
+        body::before {
+            display: block;
+            line-height: 50px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: yellow;
+            content: "{{ ENVIRONMENT_NAME }}";
+            background-color: {{ ENVIRONMENT_COLOR }};
+            z-index: 10;
+        }
+    </style>{% endblock %}
+{% block body %}
+    {% block navigation %}
+        <div class="row">
+            <div class="title">Партнеры</div>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">Админка</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Партнеры</li>
+            </ol>
+        </nav>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+{% endblock %}
