@@ -1,0 +1,68 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'qr/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Title</title>
+</head>
+<body class="main">
+    <div class="container">
+        <div class="qr-container">
+            <div class="qr-view">
+                <h2 class="title">Информация о пользователе</h2>
+                <div class="person-block">
+                {% if user.avatar_url %}
+                    <img src="{{ user.avatar_url }}" alt="">
+                {% else %}
+                    <img src="{% static 'qr/images/default_avatar.svg' %}" alt="">
+                {% endif %}
+                </div>
+                <div class="hr">
+                </div>
+                <div class="user-description">
+                    <div class="description">
+                        <div class="label">ФИО:</div><div class="info">{{ user.full_name }}</div>
+                    </div>
+                    <div class="description">
+                        <div class="label">Компания:</div><div class="info">{{ company_name }}</div>
+                    </div>
+                    <div class="description">
+                        <div class="label">Должность:</div><div class="info">{{ company_position }}</div>
+                    </div>
+                </div>
+                <div class="discounts">
+                    <div class="discount-label">Имеющиеся скидки:</div>
+                    {% for key, values in company_discounts.items %}
+                        <div class="discounts-block">
+                            <div class="company-title">
+                                <span class="company-name">{{ key.name }}</span>
+                                {% if key.description %}
+                                    - {{ key.description }}
+                                {% endif %}
+                            </div>
+                            {% if key.image %}
+                                <div class="company-logo">
+                                    <img src="{{ key.image.url }}" alt="kairat" class="logo">
+                                </div>
+                            {% endif %}
+                            {% for d in values %}
+                                <div class="discount">
+                                {% if d.percent != 0 %}
+                                    <div class="discount-percent">- {{ d.percent }} %</div>
+                                {% else %}
+                                    <div class="discount-percent">{{ d.amount }} тг</div>
+                                {% endif %}
+                                    <div class="discount-title">{{ d.description }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

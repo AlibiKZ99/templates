@@ -1,0 +1,43 @@
+{% extends 'admin/change_form.html' %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+
+    {% if original %}
+
+        <div class="submit-row">
+            <button title="Синхронизация с Premiera"
+                    class="btn btn-high btn-info"
+                    name="_premiera">
+                <span class="glyphicon step-backward"></span>
+                <span class="text">Синхронизация с Premiera</span>
+            </button>
+        </div>
+
+        <div class="submit-row">
+            <button title="Получить id матча с Instat"
+                    class="btn btn-high btn-info"
+                    name="_find_instat_id">
+                <span class="glyphicon step-backward"></span>
+                <span class="text">Получить id матча с Instat</span>
+            </button>
+        </div>
+
+        <div class="submit-row">
+            <button title="Синхронизация с Instat"
+                    class="btn btn-high btn-info"
+                    name="_instat">
+                <span class="glyphicon step-backward"></span>
+                <span class="text">Синхронизация с Instat</span>
+            </button>
+        </div>
+
+        <button type="button" title="Хронология"
+                class="btn btn-high btn-info"
+                onclick="location.href='{{ ADMIN_SITE }}/core/matchproxy/{{ original.id }}/change/'">
+            <span class="glyphicon step-backward"></span>
+            <span class="text">Хронология</span>
+        </button>
+    {% endif %}
+
+{% endblock %}
